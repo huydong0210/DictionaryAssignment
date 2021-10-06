@@ -1,0 +1,2 @@
+goodbye		xin chào
+hello		xin chào

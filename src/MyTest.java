@@ -1,5 +1,10 @@
+import java.util.Locale;
+
 public class MyTest {
     public static void main(String[] args) {
-        DictionaryCommandline.dictionaryBasic(new Dictionary());
+        Dictionary dictionary=new Dictionary();
+        DictionaryManagement.insertFromFile(dictionary);
+        DictionaryCommandline.dictionaryBasic(dictionary);
+
     }
 }

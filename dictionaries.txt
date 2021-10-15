@@ -1,2 +1,4 @@
 goodbye		tạm biệt
 hello		xin chào
+dog		chó
+you		bạn

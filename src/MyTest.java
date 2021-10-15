@@ -1,10 +1,11 @@
-import java.util.Locale;
+import java.util.Collection;
 
 public class MyTest {
+
     public static void main(String[] args) {
-        Dictionary dictionary=new Dictionary();
-        DictionaryManagement.insertFromFile(dictionary);
-        DictionaryCommandline.dictionaryBasic(dictionary);
+        DictionaryManagement.insertFromFile();
+        Gui gui=new Gui();
+        gui.showWindow();
 
     }
 }

@@ -1,8 +1,11 @@
-import java.util.Locale;
+import java.util.Collection;
 
 public class MyTest {
+
     public static void main(String[] args) {
-        Pronounce.read("database");
+        DictionaryManagement.insertFromFile();
+        Gui gui=new Gui();
+        gui.showWindow();
 
     }
 }

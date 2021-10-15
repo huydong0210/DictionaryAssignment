@@ -6,15 +6,14 @@ public class DictionaryCommandline {
     /**
      * hàm in ra danh sách từ điển.
      *
-     * @param dictionary từ điển có sẵn.
      */
-    public static void showAllWords(Dictionary dictionary) {
+    public static void showAllWords() {
         System.out.printf("%-15s|%-20s|%-20s\n", "No", "English", "Vietnamese");
-        Collection<String> word = dictionary.word.keySet();
+        Collection<String> word = Dictionary.word.keySet();
         int i = 0;
         for (String data : word) {
             i++;
-            System.out.printf("%-15d|%-20s|%-20s\n", i, data, dictionary.word.get(data));
+            System.out.printf("%-15d|%-20s|%-20s\n", i, data, Dictionary.word.get(data));
         }
 
     }
@@ -22,9 +21,8 @@ public class DictionaryCommandline {
     /**
      * các dòng lệnh commandline.
      *
-     * @param dictionary từ điển có sẵn.
      */
-    public static void dictionaryBasic(Dictionary dictionary) {
+    public static void dictionaryBasic() {
         while (true) {
             System.out.println("1. Thêm từ vào từ điển");
             System.out.println("2. In ra toàn bộ từ trong từ điển");
@@ -43,24 +41,24 @@ public class DictionaryCommandline {
                 scanner.nextLine();
                 word.setWord_target(scanner.nextLine().toLowerCase());
                 word.setWord_explain(scanner.nextLine().toLowerCase());
-                DictionaryManagement.insertFromCommandline(dictionary, word);
+                DictionaryManagement.insertWordToDictionary(word);
                 System.out.println();
             }
             if (choice == 2) {
-                DictionaryCommandline.showAllWords(dictionary);
+                DictionaryCommandline.showAllWords();
             }
             if (choice ==3 ){
                 System.out.println("nhập từ tiếng anh mà bạn muốn tra :");
                 scanner.nextLine();
                 String s=scanner.nextLine();
-                String result=DictionaryManagement.dictionaryLookUp(dictionary,s);
+                String result=DictionaryManagement.dictionaryLookUpWithEnglishWord(s);
                 if (result==null)
                     System.out.println("khong co tu kia");
                 else
                     System.out.println(result);
             }
             if (choice == 0) {
-                DictionaryManagement.dictionaryExportToFile(dictionary);
+                DictionaryManagement.dictionaryExportToFile();
                 break;
             }
         }

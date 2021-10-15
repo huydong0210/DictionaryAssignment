@@ -1,2 +1,5 @@
-goodbye		xin chào
+activity		hoạt động
+goodbye		tạm biệt
 hello		xin chào
+dog		chó
+you		bạn

@@ -1,12 +1,23 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class GuiTraCuuTuTiengAnh extends JFrame {
 
-    JTextField txtTiengAnhCanTra,txtTiengVietNhanLai;
+
+    Border borderChung=BorderFactory.createLineBorder(Color.blue);
+
+    JTextField txtTiengAnhCanTra;
+
+    JTextArea txtTiengVietNhanLai;
 
     JButton btnChucNangTraCuuTiengAnh,btnTroVeManHinhChinhTuTraCuuTiengAnh,btnPhatAm;
 
@@ -14,6 +25,7 @@ public class GuiTraCuuTuTiengAnh extends JFrame {
 
     JPanel pnTraCuuTuTiengAnh=pnTraCuuTuTiengAnh();
 
+    JList listTiengAnh;
 
     public GuiTraCuuTuTiengAnh(){
         super("Từ Điển");
@@ -45,6 +57,19 @@ public class GuiTraCuuTuTiengAnh extends JFrame {
             }
         });
 
+        listTiengAnh.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                String english=(String) listTiengAnh.getSelectedValue();
+                if (english!=null)
+                {
+                    Word word=DictionaryManagement.dictionaryLookUp(english).get(0);
+                    txtTiengVietNhanLai.setText(word.getDescription()+"\n"+ word.getPronounce());
+                    txtTiengAnhCanTra.setText(english);
+                }
+            }
+        });
+
     }
 
     private void xuLyChucNangPhatAm() {
@@ -53,18 +78,26 @@ public class GuiTraCuuTuTiengAnh extends JFrame {
     }
 
     private void xuLyChucNangTraCuuTuTiengAnh() {
-        String tiengAnh=txtTiengAnhCanTra.getText().toLowerCase();
-        if (Dictionary.word.containsKey(tiengAnh))
+        String english=txtTiengAnhCanTra.getText().toLowerCase();
+        ArrayList<Word> words=DictionaryManagement.dictionaryLookUp(english);
+        if (words.size()==0)
         {
-            txtTiengVietNhanLai.setText(Dictionary.word.get(tiengAnh));
+            JOptionPane.showMessageDialog(null,"Không tìm thấy từ này trong từ điển");
         }
-        else
-        {
-            txtTiengVietNhanLai.setText("Không tìm thấy từ cần tra");
-        }
+        else {
+            Vector<String> vector=new Vector<String>();
+            for (Word word : words)
+            {
+                vector.add(word.getWord());
+            }
+            listTiengAnh.setListData(vector);
+            if (words.get(0).getWord().equals(english))
+            {
+                txtTiengVietNhanLai.setText(words.get(0).getDescription()+"\n"+words.get(0).getPronounce());
+            }
 
+        }
     }
-
     private void xuLyTroVeManHinhChinhTuTraCuuTiengAnh() {
         this.dispose();
         Gui gui=new Gui();
@@ -87,29 +120,51 @@ public class GuiTraCuuTuTiengAnh extends JFrame {
         pnTitle.add(lblTitle);
         pnMain.add(pnTitle);
 
+        JPanel pnTraCuuBox=new JPanel();
+        pnTraCuuBox.setLayout(new GridLayout(1,2));
         JPanel pnTiengAnh=new JPanel();
-        pnTiengAnh.setLayout(new FlowLayout());
-        JLabel lblTiengAnh=new JLabel("Tiếng Anh:");
-        lblTiengAnh.setFont(generalFont);
-        txtTiengAnhCanTra=new JTextField("Nhập từ tiếng Anh bạn cần tra",20);
+        JPanel pnTxtTiengAnh=new JPanel();
+        JPanel pnAreaTiengAnh=new JPanel();
+        pnAreaTiengAnh.setPreferredSize(new Dimension(100,300));
+        pnTiengAnh.setLayout(new BoxLayout(pnTiengAnh,BoxLayout.Y_AXIS));
+        TitledBorder titledBorderTiengAnh=new TitledBorder(borderChung,"Tiếng Anh");
+        titledBorderTiengAnh.setTitleJustification(TitledBorder.CENTER);
+        titledBorderTiengAnh.setTitleFont(generalFont);
+        txtTiengAnhCanTra=new JTextField(20);
         txtTiengAnhCanTra.setFont(fontInText);
-        pnTiengAnh.add(lblTiengAnh);
-        pnTiengAnh.add(txtTiengAnhCanTra);
-        pnMain.add(pnTiengAnh);
+        listTiengAnh=new JList();
+        listTiengAnh.setFont(fontInText);
+        JScrollPane scListTiengAnh=new JScrollPane(listTiengAnh,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        //pnTiengAnh.add(txtTiengAnhCanTra);
+        pnTxtTiengAnh.add(txtTiengAnhCanTra);
+        //pnTiengAnh.add(scListTiengAnh);
+        scListTiengAnh.setPreferredSize(new Dimension(270,350));
+        pnAreaTiengAnh.add(scListTiengAnh);
+        pnTiengAnh.add(pnTxtTiengAnh);
+        pnTiengAnh.add(pnAreaTiengAnh);
+        pnTiengAnh.setBorder(titledBorderTiengAnh);
 
         JPanel pnTiengViet=new JPanel();
-        pnTiengViet.setLayout(new FlowLayout());
-        JLabel lblTiengViet=new JLabel("Nghĩa tiếng Việt:");
-        lblTiengViet.setFont(generalFont);
-        txtTiengVietNhanLai=new JTextField(20);
+        pnTiengViet.setLayout(new BoxLayout(pnTiengViet,BoxLayout.Y_AXIS));
+        TitledBorder titledBorderTiengViet=new TitledBorder(borderChung,"Nghĩa tiếng Việt");
+        titledBorderTiengViet.setTitleJustification(TitledBorder.CENTER);
+        titledBorderTiengViet.setTitleFont(generalFont);
+        txtTiengVietNhanLai=new JTextArea();
         txtTiengVietNhanLai.setFont(fontInText);
-        pnTiengViet.add(lblTiengViet);
+        txtTiengVietNhanLai.setWrapStyleWord(true);
+        txtTiengVietNhanLai.setLineWrap(true);
         pnTiengViet.add(txtTiengVietNhanLai);
-        pnMain.add(pnTiengViet);
+        pnTiengViet.setBorder(titledBorderTiengViet);
+
+
+        pnTraCuuBox.add(pnTiengAnh);
+        pnTraCuuBox.add(pnTiengViet);
+        pnMain.add(pnTraCuuBox);
 
         JPanel pnPhatAm=new JPanel();
         pnPhatAm.setLayout(new FlowLayout());
-        btnPhatAm=new JButton("Phát Âm");
+        btnPhatAm=new JButton();
+        btnPhatAm.setIcon(new ImageIcon("Hinh\\icon\\speaker.png"));
         btnPhatAm.setFont(generalFont);
         pnPhatAm.add(btnPhatAm);
         pnMain.add(pnPhatAm);
@@ -123,12 +178,13 @@ public class GuiTraCuuTuTiengAnh extends JFrame {
 
         JPanel pnTroVe=new JPanel();
         pnTroVe.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        btnTroVeManHinhChinhTuTraCuuTiengAnh=new JButton("Trở về");
+        btnTroVeManHinhChinhTuTraCuuTiengAnh=new JButton();
+        btnTroVeManHinhChinhTuTraCuuTiengAnh.setIcon(new ImageIcon("Hinh\\icon\\back.png"));
         btnTroVeManHinhChinhTuTraCuuTiengAnh.setFont(generalFont);
         pnTroVe.add(btnTroVeManHinhChinhTuTraCuuTiengAnh);
         pnMain.add(pnTroVe);
 
-        lblTiengAnh.setPreferredSize(lblTiengViet.getPreferredSize());
+//        lblTiengAnh.setPreferredSize(lblTiengViet.getPreferredSize());
 
         return pnMain;
     }

@@ -1,18 +1,51 @@
 public class Word {
-    private String word_target; // English
-    private String word_explain;//Vietnamese
+    private int id;
+    private String word;
+    private String description;
+    private String pronounce;
 
-    public String getWord_target(){
-        return this.word_target;
+    public Word(){
+        id=0;
+        this.word=null;
+        this.description=null;
+        this.pronounce=null;
+
     }
-    public void setWord_target(String word_target){
-        this.word_target=word_target;
+    public Word(int id , String word,String description,String pronounce){
+        this.id=id;
+        this.word=word;
+        this.description=description;
+        this.pronounce=pronounce;
+    }
+    public int getId() {
+        return id;
     }
 
-    public String getWord_explain(){
-        return this.word_explain;
+    public String getWord() {
+        return word;
     }
-    public void setWord_explain(String word_explain){
-        this.word_explain=word_explain;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPronounce() {
+        return pronounce;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPronounce(String pronounce) {
+        this.pronounce = pronounce;
     }
 }

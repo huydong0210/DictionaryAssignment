@@ -1,11 +1,16 @@
-import java.util.Collection;
+import com.darkprograms.speech.translator.GoogleTranslate;
+
+import java.io.IOException;
 
 public class MyTest {
 
     public static void main(String[] args) {
-        DictionaryManagement.insertFromFile();
-        Gui gui=new Gui();
-        gui.showWindow();
-
+       Gui gui=new Gui();
+       gui.showWindow();
+//        try {
+//            System.out.println(GoogleTranslate.detectLanguage("Französisch"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }

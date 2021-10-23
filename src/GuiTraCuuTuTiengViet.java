@@ -3,7 +3,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 
 public class GuiTraCuuTuTiengViet extends JFrame {
 
@@ -57,15 +56,7 @@ public class GuiTraCuuTuTiengViet extends JFrame {
     }
 
     private void xuLyChucNangTraCuuTuTiengViet() {
-        String tiengViet=txtTiengVietCanTra.getText().toLowerCase();
-        if (Dictionary.word2.containsKey(tiengViet))
-        {
-            txtTiengAnhNhanLai.setText(Dictionary.word2.get(tiengViet));
-        }
-        else
-        {
-            txtTiengAnhNhanLai.setText("Không tìm thấy từ này");
-        }
+
 
     }
 

@@ -1,12 +1,19 @@
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Gui extends JFrame {
+
+    Border borderChung=BorderFactory.createLineBorder(Color.blue);
+
     Container con;
 
-    JButton btnTraTuTiengAnh,btnTraTuTiengViet,btnThemTu,btnSuaTu,btnXoaTu,btnThoat;
+    JButton btnTraTuTiengAnh,btnThemTu,btnSuaTu,btnXoaTu,btnThoat,btnTraTuBangNgonNguKhac, btnOnTap,btnKiemTra;
 
     JPanel pnManHinhChinh= pnMaHinhChinh();
 
@@ -26,6 +33,11 @@ public class Gui extends JFrame {
         pnManHinhChinh=pnMaHinhChinh();
         con.add(pnManHinhChinh);
     }
+    public void setBackGround(){
+        setLayout(new BorderLayout());
+        setContentPane(new JLabel(new ImageIcon("Hinh\\background\\pencil.png")));
+        setLayout(new FlowLayout());
+    }
     public JPanel pnMaHinhChinh(){
         JPanel pnMain =new JPanel();
         pnMain.setLayout(new BoxLayout(pnMain,BoxLayout.Y_AXIS));
@@ -33,6 +45,8 @@ public class Gui extends JFrame {
         JPanel pnTitle=new JPanel();
         pnTitle.setLayout(new FlowLayout());
         JLabel lblTitle=new JLabel("Từ Điển ");
+        lblTitle.setForeground(Color.red);
+        lblTitle.setIcon(new ImageIcon("Hinh\\icon\\dictionary.png"));
         lblTitle.setFont(titleFont);
         pnTitle.add(lblTitle);
         pnMain.add(pnTitle);
@@ -45,51 +59,83 @@ public class Gui extends JFrame {
         pnMain.add(pnNote);
 
         JPanel pnTraCuu=new JPanel();
+        TitledBorder titleTraCuu=new TitledBorder(borderChung,"Tra cứu");
+        titleTraCuu.setTitleJustification(TitledBorder.CENTER);
+        titleTraCuu.setTitleFont(generalFont);
         pnTraCuu.setLayout(new FlowLayout());
-        JLabel lblTraCuu=new JLabel("Tra Cứu : ");
-        btnTraTuTiengAnh=new JButton("Tra cứu từ tiếng Anh");
-        btnTraTuTiengViet=new JButton("Tra cứu từ tiếng Việt");
-        lblTraCuu.setFont(generalFont);
+        btnTraTuTiengAnh=new JButton("Tra cứu tiếng Anh");
+        btnTraTuTiengAnh.setIcon(new ImageIcon("Hinh\\icon\\tracuu.png"));
         btnTraTuTiengAnh.setFont(generalFont);
-        btnTraTuTiengViet.setFont(generalFont);
-        pnTraCuu.add(lblTraCuu);
-        pnTraCuu.add(btnTraTuTiengViet);
+        btnTraTuBangNgonNguKhac=new JButton("API Google Translate");
+        btnTraTuBangNgonNguKhac.setIcon(new ImageIcon("Hinh\\icon\\tracuungonngukhac.png"));
+        btnTraTuBangNgonNguKhac.setFont(generalFont);
         pnTraCuu.add(btnTraTuTiengAnh);
+        pnTraCuu.add(btnTraTuBangNgonNguKhac);
+        //pnTraCuu.setBorder(titleTraCuu);
         pnMain.add(pnTraCuu);
 
         JPanel pnChinhSua=new JPanel();
+        TitledBorder titleChinhSua=new TitledBorder(borderChung,"Chỉnh sửa");
+        titleChinhSua.setTitleJustification(TitledBorder.CENTER);
+        titleChinhSua.setTitleFont(generalFont);
         pnChinhSua.setLayout(new FlowLayout());
-        JLabel lblChinhSua= new JLabel("Chỉnh sửa :");
-        lblChinhSua.setFont(generalFont);
         btnSuaTu=new JButton("Sửa 1 từ");
+        btnSuaTu.setIcon(new ImageIcon("Hinh\\icon\\repair.png"));
         btnSuaTu.setFont(generalFont);
         btnThemTu=new JButton("Thêm từ");
+        btnThemTu.setIcon(new ImageIcon("Hinh\\icon\\themtu.png"));
         btnThemTu.setFont(generalFont);
         btnXoaTu=new JButton("Xóa từ");
+        btnXoaTu.setIcon(new ImageIcon("Hinh\\icon\\delete.png"));
         btnXoaTu.setFont(generalFont);
-        pnChinhSua.add(lblChinhSua);
+        //pnChinhSua.setBorder(titleChinhSua);
         pnChinhSua.add(btnThemTu);
         pnChinhSua.add(btnSuaTu);
         pnChinhSua.add(btnXoaTu);
         pnMain.add(pnChinhSua);
 
+
+
+
+        JPanel pnHocTap=new JPanel();
+        pnHocTap.setLayout(new FlowLayout(FlowLayout.CENTER));
+        btnOnTap=new JButton("Ôn tập");
+        btnOnTap.setFont(generalFont);
+        btnKiemTra=new JButton("Kiểm tra");
+        btnKiemTra.setFont(generalFont);
+        pnHocTap.add(btnOnTap);
+        pnHocTap.add(btnKiemTra);
+        //pnMain.add(pnHocTap);
+
+
+
         JPanel pnBack =new JPanel();
-        btnThoat=new JButton("Thoát");
+        btnThoat=new JButton();
         btnThoat.setFont(generalFont);
+        btnThoat.setIcon(new ImageIcon("Hinh\\icon\\exit.png"));
         pnBack.add(btnThoat);
+
+        pnTitle.setPreferredSize(new Dimension(600,70));
+        pnTitle.setBackground(Color.GREEN);
+        pnNote.setPreferredSize(new Dimension(600,50));
+        pnNote.setBackground(Color.GREEN);
+        pnTraCuu.setPreferredSize(new Dimension(600,90));
+        pnTraCuu.setBackground(Color.GREEN);
+        pnChinhSua.setPreferredSize(new Dimension(600,90));
+        pnChinhSua.setBackground(Color.GREEN);
+        pnHocTap.setPreferredSize(new Dimension(600,50));
+        pnHocTap.setBackground(Color.GREEN);
+        pnBack.setPreferredSize(new Dimension(600,100));
+        pnBack.setBackground(Color.GREEN);
+
+
         pnMain.add(pnBack);
 
-        return pnMain;
-        //   lblTraCuu.setPreferredSize(lblChinhSua.getPreferredSize()); //set dodoj rong
 
+        return pnMain;
     }
     public void addEvents(){
-        btnTraTuTiengViet.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                xuLyChuyenVaoManHinhTraTuTiengVietTuManHinhChinh();
-            }
-        });
+
         btnTraTuTiengAnh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -121,6 +167,18 @@ public class Gui extends JFrame {
                 xuLyChuyenVaoManHinhXoaTuTuManHinhChinh();
             }
         });
+        btnTraTuBangNgonNguKhac.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                xuLyChuyenVaoManHinhAPITuManHinhChinh();
+            }
+        });
+    }
+
+    private void xuLyChuyenVaoManHinhAPITuManHinhChinh() {
+        this.dispose();
+        GuiTraCuuNgonNguKhac guiTraCuuNgonNguKhac=new GuiTraCuuNgonNguKhac();
+        guiTraCuuNgonNguKhac.showWindow();
     }
 
     private void xuLyChuyenVaoManHinhXoaTuTuManHinhChinh() {
@@ -151,19 +209,14 @@ public class Gui extends JFrame {
         GuiTraCuuTuTiengAnh guiTraCuuTuTiengAnh=new GuiTraCuuTuTiengAnh();
         guiTraCuuTuTiengAnh.showWindow();
     }
-    public void xuLyChuyenVaoManHinhTraTuTiengVietTuManHinhChinh(){
-        this.dispose();
-        GuiTraCuuTuTiengViet guiTraCuuTuTiengViet=new GuiTraCuuTuTiengViet();
-        guiTraCuuTuTiengViet.showWindow();
-    }
     public void showWindow(){
-        this.setSize(600,600);// set size
+
+        this.setSize(600,450);// set size
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);// thêm chức năng thoát hoàn toàn khỏi chương trình vào nút đỏ
         this.setLocationRelativeTo(null);// để giao diện nằm chính giữa
         this.setResizable(false);// không cho phép thay đổi kích cỡ cửa sổ
         this.setVisible(true);// để giao diện hiện lên
         this.setResizable(false);
-
 
     }
 
